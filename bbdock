@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Author: bullsec
+#
+
+if [ $# -eq 0 ]
+ then
+  echo "[*] Usage: ./bbdock customDirectoryName"
+else
+  custom_dir=$1
+
+# Check For $custom_dir, create if not exists
+ if [[ -d $(pwd)/$custom_dir ]]
+  then
+   echo "[*] ... Using Existing Directory ... "
+   echo -e $(pwd)/$custom_dir "\n\n"
+  else
+   echo -e "[*] ... Creating New Directory ... "
+   echo -e $(pwd)/$custom_dir "\n\n"
+   mkdir -p $custom_dir
+ fi
+
+ # Warn if Seclists not found
+ if [[ -d /usr/share/seclists ]]
+  then
+   echo "[!] ... Found Seclists ... "
+  else
+   echo "[!] ... Seclists Not Found ..."
+ fi
+
+ echo "[!] ... Launching Docker ..."
+ echo -e "[*] ... Docker Launched ...\n"
+ docker run --memory=4g -v $(pwd)/$custom_dir:/root/$custom_dir -v /usr/share/seclists/:/root/seclists -it bullsec/bb:latest /bin/zsh
+fi
