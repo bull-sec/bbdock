@@ -21,8 +21,6 @@ RUN GO111MODULE=on go install github.com/jaeles-project/gospider@latest
 ENV PATH=$PATH:/root/.pdtm/go/bin:/root/go/bin
 
 # Additional Installations
-WORKDIR /root/
-
 RUN pdtm -ia
 
 # Custom Changes
